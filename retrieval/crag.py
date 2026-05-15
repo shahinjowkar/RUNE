@@ -168,18 +168,18 @@ _builder.add_edge("self_grade", END)
 _graph = _builder.compile()
 
 
-# ── Public interface ───────────────────────────────────────────────────────
+
 
 def answer(question: str, collection: str, routing_strategy: str = "llm") -> dict:
-    # 1. Semantic cache check
+
     cached = semantic_cache.get(question)
     if cached:
         return cached
 
-    # 2. Adaptive complexity classification
+
     complexity = classify(question)
 
-    # 3. Multi-hop for complex queries
+
     if complexity == "complex":
         sub_questions = decompose(question)
         sub_answers = []
@@ -199,7 +199,7 @@ def answer(question: str, collection: str, routing_strategy: str = "llm") -> dic
     else:
         result = _run_single(question, collection, routing_strategy, complexity)
 
-    # 4. Cache result
+
     semantic_cache.set(question, result)
     return result
 

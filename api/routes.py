@@ -40,7 +40,7 @@ def _run_ingestion(url: str, collection: str) -> None:
         _ingestion_jobs[collection] = {"status": "error", "summary": {"error": str(e)}}
 
 
-# ── Ops ────────────────────────────────────────────────────────────────────
+
 
 @router.get("/health", response_model=HealthResponse, tags=["ops"])
 def health():
@@ -58,7 +58,7 @@ def cache_clear():
     return {"message": "cache cleared"}
 
 
-# ── Ingestion ──────────────────────────────────────────────────────────────
+
 
 @router.post("/ingest", response_model=IngestStatus, tags=["ingestion"])
 def ingest(req: IngestRequest, background: BackgroundTasks):
@@ -77,7 +77,7 @@ def ingest_status(collection: str):
     return IngestStatus(status=job["status"], message=f"Collection: {collection}", summary=job.get("summary"))
 
 
-# ── Query ──────────────────────────────────────────────────────────────────
+
 
 @router.post("/query", response_model=QueryResponse, tags=["rag"])
 def query(req: QueryRequest):
@@ -123,7 +123,7 @@ async def query_stream(req: QueryRequest):
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
-# ── Evaluation ─────────────────────────────────────────────────────────────
+
 
 @router.post("/eval", response_model=EvalResponse, tags=["evaluation"])
 def evaluate(req: EvalRequest):
